@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred-id') // Jenkins secret ID
+        KUBECONFIG_CREDENTIALS = credentials('kubeconfig-cred-id') // Jenkins secret ID
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ananyajagdish/devops-capstone.git'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished. Check build logs for details."
+        }
+    }
+}
