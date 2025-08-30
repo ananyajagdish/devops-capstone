@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                export PYTHONPATH=$(pwd)/app/src
+                sh 'export PYTHONPATH=$(pwd)/app/src'
                 sh '''
                     python3 -m venv venv
                     source venv/bin/activate
