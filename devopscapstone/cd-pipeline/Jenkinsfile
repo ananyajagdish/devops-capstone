@@ -22,7 +22,7 @@ pipeline {
                 python3 -m venv venv
                 source venv/bin/activate
                 pip install pytest
-                python3 -m pytest devops-capstone/app/tests/
+                python3 -m pytest devopscapstone/app/tests/
                 '''
             }
         }
