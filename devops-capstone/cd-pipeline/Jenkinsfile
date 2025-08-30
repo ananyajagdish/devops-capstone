@@ -16,9 +16,13 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo "running tests."
+                sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install pytest
+                    pytest
+                '''
                 sh 'pytest tests/'
-                echo "done testing."
             }
         }
         stage('Build Docker Image') {
