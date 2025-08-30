@@ -19,8 +19,8 @@ pipeline {
                 sh '''
                 # Set Python path to find modules
                 export PYTHONPATH=$WORKSPACE/app
-                pip install -r app/requirements.txt  # if you have dependencies
-                pytest app/tests/
+                python3 -m pip install -r app/requirements.txt
+                python3 -m pytest app/tests/
                 '''
             }
         }
