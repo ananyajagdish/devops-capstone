@@ -17,13 +17,15 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo pwd: $(pwd)'
-                sh 'export PYTHONPATH=$(pwd)/devops-capstone/app/src'
+                
                 sh '''
                     python3 -m venv venv
                     source venv/bin/activate
                     pip install pytest
                     pytest
                 '''
+                sh 'export PYTHONPATH=$(pwd)/devops-capstone/app/src'
+                sh 'echo pythonpath: $(PYTHONPATH)'
                 sh 'pytest app/tests/test_app.py'
             }
         }
