@@ -19,7 +19,9 @@ pipeline {
                 sh '''
                 # Set Python path to find modules
                 export PYTHONPATH=$WORKSPACE/app
-                python3 -m pip install -r app/requirements.txt
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install pytest
                 python3 -m pytest app/tests/
                 '''
             }
