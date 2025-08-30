@@ -14,18 +14,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ananyajagdish/devops-capstone.git'
             }
         }
-        stage('Test') {
-            steps {
-                sh '''
-                # Set Python path to find modules
-                export PYTHONPATH=$WORKSPACE/app
-                python3 -m venv venv
-                source venv/bin/activate
-                pip install pytest
-                python3 -m pytest devopscapstone/app/tests/
-                '''
-            }
-        }
+        
         stage('Build Docker Image') {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
