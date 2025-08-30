@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'echo $(pwd)'
+                sh 'echo pwd: $(pwd)'
                 sh 'export PYTHONPATH=$(pwd)/devops-capstone/app/src'
                 sh '''
                     python3 -m venv venv
