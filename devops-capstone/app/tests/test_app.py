@@ -1,6 +1,6 @@
 import pytest
 
-from app.src.app import get_dow
+from devops-capstone.app.src.app import get_dow
 
 def test_get_dow():
     assert get_dow('2025-08-28') == 'The day of the week is Thursday'
