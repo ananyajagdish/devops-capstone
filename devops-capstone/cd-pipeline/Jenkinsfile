@@ -12,6 +12,10 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ananyajagdish/devops-capstone.git'
             }
         }
+        stage('Test') {
+            steps {
+                sh 'pytest tests/'
+            }
     }
 
     post {
