@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo $(pwd)
+                sh 'echo $(pwd)'
                 sh 'export PYTHONPATH=$(pwd)/app/src'
                 sh '''
                     python3 -m venv venv
