@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Copy the src folder from local to the container.
 COPY devopscapstone/app/src /app/src
-COPY app/requirements.txt /app
+COPY devopscapstone/app/requirements.txt /app
 
 # Install any Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
