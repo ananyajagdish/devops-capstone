@@ -14,7 +14,9 @@ pipeline {
         }
         stage('Test') {
             steps {
+                echo "running tests."
                 sh 'pytest tests/'
+                echo "done testing."
             }
         }
     }
