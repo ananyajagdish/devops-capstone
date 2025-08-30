@@ -22,10 +22,9 @@ pipeline {
                     python3 -m venv venv
                     source venv/bin/activate
                     pip install pytest
-                    pytest
+                    export PYTHONPATH=$WORKSPACE/app/src
+                    pytest app/tests/test_app.py
                 '''
-                export PYTHONPATH=$WORKSPACE/app/src
-                sh 'pytest app/tests/test_app.py'
             }
         }
         stage('Build Docker Image') {
