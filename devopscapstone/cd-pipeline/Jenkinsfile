@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // Jenkins secret ID
         KUBECONFIG_CREDENTIALS = credentials('eks-kubeconfig') // Jenkins secret ID
-        IMAGE_NAME = "ananyaj1230@gmail.com/my-app"
+        IMAGE_NAME = "ananyaj1230/my-app"
         IMAGE_TAG = "v1"
     }
 
