@@ -16,14 +16,11 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'echo pwd: $(pwd)'
-                
                 sh '''
-                    python3 -m venv venv
-                    source venv/bin/activate
-                    pip install pytest
-                    export PYTHONPATH=$WORKSPACE/app/src
-                    pytest /var/lib/jenkins/workspace/pipeline/devops-capstone/app/tests/test_app.py
+                # Set Python path to find modules
+                export PYTHONPATH=$WORKSPACE/app
+                pip install -r app/requirements.txt  # if you have dependencies
+                pytest app/tests/
                 '''
             }
         }
