@@ -7,7 +7,7 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 WORKDIR /app
 
 # Copy the src folder from local to the container.
-COPY app/src /app/src
+COPY devopscapstone/app/src /app/src
 COPY app/requirements.txt /app
 
 # Install any Python dependencies
