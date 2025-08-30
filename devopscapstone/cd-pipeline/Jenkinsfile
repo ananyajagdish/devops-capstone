@@ -32,6 +32,16 @@ pipeline {
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -f devopscapstone/docker/Dockerfile ."
             }
         }
+        stage('Push to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh '''
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push $IMAGE_NAME:latest
+                    '''
+                }
+            }
+        }
     }
 
     post {
