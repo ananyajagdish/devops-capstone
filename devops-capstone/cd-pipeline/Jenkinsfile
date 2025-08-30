@@ -23,7 +23,7 @@ pipeline {
                     source venv/bin/activate
                     pip install pytest
                     export PYTHONPATH=$WORKSPACE/app/src
-                    pytest $WORKSPACE/app/tests/test_app.py
+                    pytest /var/lib/jenkins/workspace/pipeline/devops-capstone/app/tests/test_app.py
                 '''
             }
         }
