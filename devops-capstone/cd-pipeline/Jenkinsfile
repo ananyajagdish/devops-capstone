@@ -24,8 +24,7 @@ pipeline {
                     pip install pytest
                     pytest
                 '''
-                sh 'export PYTHONPATH=$(pwd)/devops-capstone/app/src'
-                sh 'echo pythonpath: $(PYTHONPATH)'
+                export PYTHONPATH=$WORKSPACE/app/src
                 sh 'pytest app/tests/test_app.py'
             }
         }
