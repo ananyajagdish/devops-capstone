@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // Jenkins secret ID
+        KUBECONFIG_CREDENTIALS = credentials('eks-kubeconfig') // Jenkins secret ID
+        IMAGE_NAME = "ananyaj1230/my-app"
+        IMAGE_TAG = "v1"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ananyajagdish/devops-capstone.git'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh '''
+                # Set Python path to find modules
+                export PYTHONPATH=$WORKSPACE/app
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install pytest
+                pip install flask
+                python3 -m pytest app/tests/
+                '''
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -f docker/Dockerfile ."
+            }
+        }
+        stage('Push to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh '''
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push $IMAGE_NAME:v1
+                    '''
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                withCredentials([file(credentialsId: 'eks-kubeconfig-file', variable: 'KUBECONFIG_FILE')]) {
+                    sh '''
+                        export KUBECONFIG=$KUBECONFIG_FILE
+                        kubectl apply -f devopscapstone/k8s/
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout'
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
